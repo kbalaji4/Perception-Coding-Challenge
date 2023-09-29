@@ -12,7 +12,6 @@ mask = cv2.inRange(image, lower_red, upper_red)
 # Find contours in the mask
 contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-
 # Find the centroids of the red cones
 cone_centroids = []
 for contour in contours:
@@ -26,7 +25,6 @@ for contour in contours:
 right_cones = []
 left_cones = []
 
-
 #Sorts left and right cones
 for centroid in cone_centroids:
     if centroid[0] > image.shape[1] / 2:
@@ -38,6 +36,7 @@ for centroid in cone_centroids:
 right_cones.sort(key=lambda x: x[1])
 left_cones.sort(key=lambda x: x[1])
 
+#Function that draws a line of best fit on the cones
 def find_cones_line(cones):
     # Extract X and Y coordinates of cone centroids
     cone_x = [point[0] for point in cones]
@@ -71,10 +70,9 @@ cv2.line(image, start_pointL, end_pointL, (0, 0, 255), 4)
 cv2.line(image, start_pointR, end_pointR, (0, 0, 255), 4)
 
 # Save the result as "answer.png"
-#cv2.imwrite("answer.png", image)
+cv2.imwrite("answer.png", image)
 
 # Displaying the image
-cv2.imshow("img1", mask)
-cv2.imshow("img", image)
+cv2.imshow("answer", image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
